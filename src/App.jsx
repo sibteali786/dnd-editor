@@ -15,7 +15,7 @@ function App() {
   // This is intentionally unoptimized — we want to feel the slowdown
   const handleStressTest = () => {
     const types = ["Text", "Button", "Image"];
-    const items = Array.from({ length: 1000 }, (_, i) => ({
+    const items = Array.from({ length: 200 }, (_, i) => ({
       id: Date.now() + i, // offset by i so each id stays unique
       type: types[i % types.length], // cycles through types: Text, Button, Image, Text...
     }));
