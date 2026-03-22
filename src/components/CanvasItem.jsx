@@ -1,6 +1,11 @@
 // Renders the correct UI for each dropped item based on its 'type'
-// Kept as a separate component so later we can memo-ize it individually
-function CanvasItem({ item }) {
+
+import { memo } from "react";
+
+// memo() wraps the component and does a shallow comparison of props before re-rendering
+// If props haven't changed since last render → React skips the render entirely
+// This is the single most impactful fix for list performance
+const CanvasItem = memo(function ({ item }) {
   // Decide what to render based on component type
   const renderContent = () => {
     switch (item.type) {
@@ -22,6 +27,6 @@ function CanvasItem({ item }) {
       {renderContent()}
     </div>
   );
-}
+});
 
 export default CanvasItem;

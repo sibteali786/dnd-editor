@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Sidebar from "./components/Sidebar";
 import Canvas from "./components/Canvas";
 import "./App.css";
@@ -21,9 +21,12 @@ function App() {
     }));
     setCanvasItems(items);
   };
-  // Called when user drops a sidebar item onto the canvas
-  // 'type' is what kind of component it is (e.g. "Text", "Button")
-  const handleDrop = (type) => {
+  // useCallback returns the SAME function reference between renders
+  // Without it: every App re-render creates a NEW handleDrop function
+  // → Canvas sees a new prop → Canvas re-renders → all CanvasItems re-render
+  // → memo() on CanvasItem becomes useless because Canvas still re-renders
+  // The empty [] means: create this function once, never recreate
+  const handleDrop = useCallback((type) => {
     const newItem = {
       id: Date.now(), // unique id using timestamp — simple, good enough for now
       type, // what kind of component: 'Text' | 'Button' | 'Image'
@@ -31,7 +34,7 @@ function App() {
     // always create a new array instead of mutating state directly
     // React won't detect changes if you mutate the existing array
     setCanvasItems((prev) => [...prev, newItem]);
-  };
+  }, []);
 
   return (
     <div className="app-layout">

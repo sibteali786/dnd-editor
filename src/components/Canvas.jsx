@@ -1,6 +1,7 @@
+import { memo } from "react";
 import CanvasItem from "./CanvasItem";
 
-function Canvas({ items, onDrop }) {
+const Canvas = memo(function ({ items, onDrop }) {
   const handleDragOver = (e) => {
     // By default, the browser does NOT allow dropping onto elements
     // preventDefault() tells the browser: "yes, this is a valid drop target"
@@ -31,6 +32,6 @@ function Canvas({ items, onDrop }) {
       ))}
     </div>
   );
-}
+});
 
 export default Canvas;
